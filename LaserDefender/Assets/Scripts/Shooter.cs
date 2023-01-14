@@ -4,18 +4,25 @@ using UnityEngine;
 
 public class Shooter : MonoBehaviour
 {
+    [Header("GeneralVariables")]
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] float projectileSpeed = 10f;
     [SerializeField] float projectileLifeTime = 5f ;
     [SerializeField] float firingRate = 1f;
-    public bool isFiring;
+    [Header("EnemyVariables")]
+    [SerializeField] bool useAI;
+    [SerializeField] float timeBetweenEnemyShots = 1f;
+    [SerializeField] float enemyShotsVariance;
+    [SerializeField] float minEnemyShots = 0.2f;
+    
+    [HideInInspector] public bool isFiring;
     Coroutine firingCoroutine;
     void Start()
     {
-        
+        if(useAI){
+            isFiring = true;
+        }
     }
-
-    
     void Update()
     {
         Fire();    
@@ -35,10 +42,23 @@ public class Shooter : MonoBehaviour
             GameObject instance = Instantiate(projectilePrefab,transform.position,Quaternion.identity);
             Rigidbody2D projectileRb = instance.GetComponent<Rigidbody2D>();
             if(projectileRb != null){
-                projectileRb.velocity = transform.up * projectileSpeed;
+                if(!useAI){
+                    projectileRb.velocity = transform.up * projectileSpeed;
+                }
+                else{
+                    projectileRb.velocity = -transform.up * projectileSpeed;
+                }
+                
             }
             Destroy(instance, projectileLifeTime);
-            yield return new WaitForSeconds(firingRate);
+            if(!useAI){
+                yield return new WaitForSeconds(firingRate);
+            }
+            else{
+                float enemyFiringRate = Random.Range(timeBetweenEnemyShots - enemyShotsVariance, timeBetweenEnemyShots + enemyShotsVariance);
+                yield return new WaitForSeconds(Mathf.Clamp(enemyFiringRate, minEnemyShots, float.MaxValue));
+            }
+            
         }
     }
 }
