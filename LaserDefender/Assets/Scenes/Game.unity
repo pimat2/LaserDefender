@@ -596,10 +596,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Level Manager
       objectReference: {fileID: 0}
-    - target: {fileID: 6522143890907154040, guid: ed8e328d679a0b34fb61b89408e13624, type: 3}
-      propertyPath: sceneLoadDelay
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 6817926033751388966, guid: ed8e328d679a0b34fb61b89408e13624, type: 3}
       propertyPath: m_RootOrder
       value: 8
