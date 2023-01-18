@@ -42,7 +42,6 @@ public class Health : MonoBehaviour
         scoreKeeper.ModifyScore(score);
       }
       else{
-        scoreKeeper.ResetScore();
         levelManager.GameOver();
       }
    }
