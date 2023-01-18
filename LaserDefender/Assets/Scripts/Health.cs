@@ -12,11 +12,13 @@ public class Health : MonoBehaviour
    [SerializeField] bool applyCameraShake;
    AudioPlayer audioPlayer;
    ScoreKeeper scoreKeeper;
+   LevelManager levelManager;
 
    void Awake() {
      audioPlayer = FindObjectOfType<AudioPlayer>();
      cameraShake = Camera.main.GetComponent<CameraShake>();
      scoreKeeper = FindObjectOfType<ScoreKeeper>();
+     levelManager = FindObjectOfType<LevelManager>();
    }
    void OnTriggerEnter2D(Collider2D other) {
         DamageDealer damageDealer = other.GetComponent<DamageDealer>();
@@ -41,6 +43,7 @@ public class Health : MonoBehaviour
       }
       else{
         scoreKeeper.ResetScore();
+        levelManager.GameOver();
       }
    }
    void PlayHitEffect(){
